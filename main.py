@@ -14,29 +14,36 @@ H = st.number_input("Biaya penyimpanan per unit per tahun (Rp)", min_value=1, va
 # Perhitungan EOQ
 EOQ = np.sqrt((2 * D * S) / H)
 jumlah_pemesanan = D / EOQ
-total_biaya = (jumlah_pemesanan * S) + ((EOQ / 2) * H)
+biaya_pesan_EOQ = jumlah_pemesanan * S
+biaya_simpan_EOQ = (EOQ / 2) * H
+total_biaya_EOQ = biaya_pesan_EOQ + biaya_simpan_EOQ
 
-# Output teks
+# =======================
+# OUTPUT UTAMA
+# =======================
+
 st.markdown("### ✅ Hasil Perhitungan:")
+
 st.write(f"1. **EOQ (Jumlah optimal per pemesanan):** `{EOQ:.2f} unit`")
 st.write(f"2. **Jumlah Pemesanan per Tahun:** `{jumlah_pemesanan:.2f} kali`")
-st.write(f"3. **Total Biaya Persediaan Tahunan:** `Rp {total_biaya:,.0f}`")
+st.write(f"3. **Total Biaya Persediaan Tahunan:** `Rp {total_biaya_EOQ:,.0f}`")
+
+st.markdown("### 📊 Rincian Biaya di Titik EOQ:")
+st.write(f"- 🔵 **Biaya Pemesanan Tahunan:** `Rp {biaya_pesan_EOQ:,.0f}`")
+st.write(f"- 🟢 **Biaya Penyimpanan Tahunan:** `Rp {biaya_simpan_EOQ:,.0f}`")
+st.write(f"- 🟠 **Total Biaya Persediaan:** `Rp {total_biaya_EOQ:,.0f}`")
 
 # =======================
-# VISUALISASI 3 KOMPONEN
+# VISUALISASI GRAFIK
 # =======================
 
-st.markdown("### 📊 Kurva Biaya: Pemesanan, Penyimpanan & Total")
+st.markdown("### 📈 Kurva Biaya: Pemesanan, Penyimpanan & Total")
 
-# Rentang Q (jumlah pemesanan)
 Q_range = np.linspace(100, D, 200)
-
-# Perhitungan biaya per Q
 biaya_pesan = (D / Q_range) * S
 biaya_simpan = (Q_range / 2) * H
 biaya_total = biaya_pesan + biaya_simpan
 
-# Grafik
 fig, ax = plt.subplots()
 ax.plot(Q_range, biaya_pesan, label="Biaya Pemesanan", color='blue')
 ax.plot(Q_range, biaya_simpan, label="Biaya Penyimpanan", color='green')
