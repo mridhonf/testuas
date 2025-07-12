@@ -2,37 +2,48 @@ import streamlit as st
 import numpy as np
 import matplotlib.pyplot as plt
 
-st.title("Visualisasi Biaya Persediaan (EOQ Breakdown)")
+st.title("📦 Model Persediaan EOQ (Economic Order Quantity)")
 
-# Input pengguna
-D = st.number_input("Kebutuhan per tahun (D)", min_value=1, value=12000)
-S = st.number_input("Biaya pemesanan per pesanan (S)", min_value=1, value=100000)
-H = st.number_input("Biaya penyimpanan per unit per tahun (H)", min_value=1, value=2500)
+st.markdown("### 📘 Masukkan Parameter Persediaan:")
+
+# Input dari pengguna
+D = st.number_input("Kebutuhan per tahun (unit)", min_value=1, value=12000)
+S = st.number_input("Biaya pemesanan per pesanan (Rp)", min_value=1, value=100000)
+H = st.number_input("Biaya penyimpanan per unit per tahun (Rp)", min_value=1, value=2500)
 
 # Perhitungan EOQ
 EOQ = np.sqrt((2 * D * S) / H)
+jumlah_pemesanan = D / EOQ
+total_biaya = (jumlah_pemesanan * S) + ((EOQ / 2) * H)
 
-# Rentang nilai Q (jumlah pemesanan)
+# Output teks
+st.markdown("### ✅ Hasil Perhitungan:")
+st.write(f"1. **EOQ (Jumlah optimal per pemesanan):** `{EOQ:.2f} unit`")
+st.write(f"2. **Jumlah Pemesanan per Tahun:** `{jumlah_pemesanan:.2f} kali`")
+st.write(f"3. **Total Biaya Persediaan Tahunan:** `Rp {total_biaya:,.0f}`")
+
+# =======================
+# VISUALISASI 3 KOMPONEN
+# =======================
+
+st.markdown("### 📊 Kurva Biaya: Pemesanan, Penyimpanan & Total")
+
+# Rentang Q (jumlah pemesanan)
 Q_range = np.linspace(100, D, 200)
 
-# Perhitungan biaya-biaya
-biaya_pemesanan = (D / Q_range) * S
-biaya_penyimpanan = (Q_range / 2) * H
-total_biaya = biaya_pemesanan + biaya_penyimpanan
+# Perhitungan biaya per Q
+biaya_pesan = (D / Q_range) * S
+biaya_simpan = (Q_range / 2) * H
+biaya_total = biaya_pesan + biaya_simpan
 
-# Visualisasi
+# Grafik
 fig, ax = plt.subplots()
-ax.plot(Q_range, biaya_pemesanan, label="Biaya Pemesanan", color='blue')
-ax.plot(Q_range, biaya_penyimpanan, label="Biaya Penyimpanan", color='green')
-ax.plot(Q_range, total_biaya, label="Total Biaya", color='orange')
+ax.plot(Q_range, biaya_pesan, label="Biaya Pemesanan", color='blue')
+ax.plot(Q_range, biaya_simpan, label="Biaya Penyimpanan", color='green')
+ax.plot(Q_range, biaya_total, label="Total Biaya", color='orange')
 ax.axvline(EOQ, color='red', linestyle='--', label=f'EOQ ≈ {EOQ:.0f}')
-
 ax.set_xlabel("Jumlah Pemesanan per Order (Q)")
 ax.set_ylabel("Biaya (Rp)")
 ax.set_title("Kurva Komponen Biaya Persediaan")
 ax.legend()
 st.pyplot(fig)
-
-# Output numerik
-st.markdown("### 🔍 Ringkasan:")
-st.write(f"**EOQ (Jumlah Optimal per Order):** {EOQ:.2f} unit")
