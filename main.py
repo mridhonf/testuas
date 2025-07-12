@@ -15,8 +15,8 @@ H = st.number_input("Biaya penyimpanan per unit per tahun (Rp)", min_value=1, va
 EOQ = np.sqrt((2 * D * S) / H)
 jumlah_pemesanan = D / EOQ
 biaya_pesan_EOQ = jumlah_pemesanan * S
+biaya_simpan_EOQ = (EOQ / 2) * H
 total_biaya_EOQ = biaya_pesan_EOQ + biaya_simpan_dari_EOQ
-biaya_simpan_dari_EOQ = EOQ / 2 * H
 # =======================
 # OUTPUT UTAMA
 # =======================
@@ -28,7 +28,7 @@ st.write(f"2. **Jumlah Pemesanan per Tahun:** `{jumlah_pemesanan:.2f} kali`")
 
 st.markdown("### 📊 Rincian Biaya di Titik EOQ:")
 st.write(f"- 🔵 **Biaya Pemesanan Tahunan:** `Rp {biaya_pesan_EOQ:,.0f}`")
-st.write(f"- 🟢 **Biaya Penyimpanan Tahunan:** `Rp {biaya_simpan_dari_EOQ:,.0f}`")
+st.write(f"- 🟢 **Biaya Penyimpanan Tahunan:** `Rp {biaya_simpan_EOQ:,.0f}`")
 st.write(f"- 🟠 **Total Biaya Persediaan Tahunan:** `Rp {total_biaya_EOQ:,.0f}`")
 
 # =======================
