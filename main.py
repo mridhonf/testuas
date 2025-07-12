@@ -16,7 +16,7 @@ EOQ = np.sqrt((2 * D * S) / H)
 jumlah_pemesanan = D / EOQ
 biaya_pesan_EOQ = jumlah_pemesanan * S
 biaya_simpan_EOQ = (EOQ / 2) * H
-total_biaya_EOQ = biaya_pesan_EOQ + biaya_simpan_dari_EOQ
+total_biaya_EOQ = biaya_pesan_EOQ + biaya_simpan_EOQ
 # =======================
 # OUTPUT UTAMA
 # =======================
