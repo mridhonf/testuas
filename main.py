@@ -15,7 +15,7 @@ H = st.number_input("Biaya penyimpanan per unit per tahun (Rp)", min_value=1, va
 EOQ = np.sqrt((2 * D * S) / H)
 jumlah_pemesanan = D / EOQ
 biaya_pesan_EOQ = jumlah_pemesanan * S
-total_biaya_EOQ = biaya_pesan_EOQ + biaya_simpan_EOQ
+total_biaya_EOQ = biaya_pesan_EOQ + biaya_simpan_dari_EOQ
 biaya_simpan_dari_EOQ = EOQ / 2 * H
 # =======================
 # OUTPUT UTAMA
