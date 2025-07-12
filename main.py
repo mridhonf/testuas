@@ -2,7 +2,7 @@ import streamlit as st
 import numpy as np
 import matplotlib.pyplot as plt
 
-st.title("📦 Model Persediaan EOQ (Economic Order Quantity)")
+st.title("⛽ Model Persediaan EOQ (Economic Order Quantity)")
 
 st.markdown("### 📘 Masukkan Parameter Persediaan:")
 
@@ -15,7 +15,7 @@ H = st.number_input("Biaya penyimpanan per unit per tahun (Rp)", min_value=1, va
 EOQ = np.sqrt((2 * D * S) / H)
 jumlah_pemesanan = D / EOQ
 biaya_pesan_EOQ = jumlah_pemesanan * S
-biaya_simpan_EOQ = (EOQ / 2) * H
+biaya_simpan_EOQ = EOQ / 2 * H
 total_biaya_EOQ = biaya_pesan_EOQ + biaya_simpan_EOQ
 
 # =======================
@@ -26,12 +26,11 @@ st.markdown("### ✅ Hasil Perhitungan:")
 
 st.write(f"1. **EOQ (Jumlah optimal per pemesanan):** `{EOQ:.2f} unit`")
 st.write(f"2. **Jumlah Pemesanan per Tahun:** `{jumlah_pemesanan:.2f} kali`")
-st.write(f"3. **Total Biaya Persediaan Tahunan:** `Rp {total_biaya_EOQ:,.0f}`")
 
 st.markdown("### 📊 Rincian Biaya di Titik EOQ:")
 st.write(f"- 🔵 **Biaya Pemesanan Tahunan:** `Rp {biaya_pesan_EOQ:,.0f}`")
 st.write(f"- 🟢 **Biaya Penyimpanan Tahunan:** `Rp {biaya_simpan_EOQ:,.0f}`")
-st.write(f"- 🟠 **Total Biaya Persediaan:** `Rp {total_biaya_EOQ:,.0f}`")
+st.write(f"- 🟠 **Total Biaya Persediaan Tahunan:** `Rp {total_biaya_EOQ:,.0f}`")
 
 # =======================
 # VISUALISASI GRAFIK
